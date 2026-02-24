@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Cow Delays Monitor Pro for Astronaut</title>
+    <meta name="description" content="Cow Delays Monitor Pro - Monitor your Lely Astronaut robots directly from an industrial screen in your barn.">
+    <meta property="og:title" content="Cow Delays Monitor Pro for Astronaut">
+    <meta property="og:description" content="Turn any screen into a fixed industrial monitor connected to your Astronaut robots.">
+    <meta property="og:url" content="https://cowmonitor.live/home.html">
+    <meta property="og:image" content="https://cowmonitor.live/lelydisplaydelay.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cow Delays Monitor">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000;
+            --primary: #2ecc71;
+            --accent-red: #ff3e3e;
+            --accent-amber: #ff9f1c;
+            --accent-blue: #3498db;
+            --text-color: #ffffff;
+            --gray: #111;
+            --card-bg: #0a0a0a;
+            --border-color: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+        header {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: -1px; text-transform: uppercase; text-decoration: none; color: #fff; }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: var(--text-color); text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        #lang-select {
+            background: #111; color: var(--primary); border: 1px solid #333; padding: 5px 10px;
+            border-radius: 5px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-right: 15px;
+        }
+
+        .nav-right { display: flex; align-items: center; }
+
+        /* --- HERO (ABOVE THE FOLD) --- */
+        .hero { padding: 40px 5%; text-align: center; min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; text-transform: uppercase; max-width: 1100px; }
+        .hero p { max-width: 900px; margin: 0 auto 40px; font-size: 1.2rem; color: #aaa; }
+        
+        .cta-group { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-bottom: 50px; width: 100%; }
+        
+        /* Bottoni evidenziati */
+        .btn-main { 
+            background: var(--primary); color: #000; padding: 22px 50px; border-radius: 50px; 
+            font-weight: 900; text-decoration: none; font-size: 1.3rem; 
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.4); transition: 0.3s;
+            animation: pulse-green 2s infinite;
+        }
+        .btn-secondary { 
+            border: 3px solid #fff; color: #fff; padding: 22px 50px; border-radius: 50px; 
+            font-weight: 900; text-decoration: none; font-size: 1.3rem; transition: 0.3s;
+        }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(46, 204, 113, 0.6); }
+        .btn-secondary:hover { background: #fff; color: #000; }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+
+        .hero-img { max-width: 1000px; width: 100%; border-radius: 20px; border: 1px solid #333; margin-top: 40px; box-shadow: 0 0 50px rgba(46, 204, 113, 0.1); }
+
+        /* --- FEATURES --- */
+        .features { padding: 80px 5%; background: #080808; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1250px; margin: 0 auto; }
+        .feature-card { background: var(--gray); padding: 30px; border-radius: 20px; border: 1px solid #222; }
+        .feature-card h3 { margin-bottom: 12px; font-weight: 900; font-size: 1.3rem; }
+        .feature-card p { font-size: 0.95rem; color: #888; }
+
+        /* --- GUIDE SECTION --- */
+        .guide-section { padding: 100px 5%; background: #050505; }
+        .guide-container { max-width: 1000px; margin: 0 auto; }
+        
+        .guide-header { text-align: center; margin-bottom: 60px; }
+        .guide-header h2 { font-size: 2.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
+
+        .step-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 50px; margin-bottom: 40px;
+        }
+        .step-badge {
+            background: var(--primary); color: #000; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.4rem; margin-bottom: 30px;
+        }
+        .step-card h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
+        .step-card h4 { color: var(--primary); margin: 25px 0 10px; font-weight: 800; }
+        .step-card ul { margin-left: 20px; color: #888; margin-bottom: 25px; }
+        .step-card li { margin-bottom: 10px; }
+
+        .critical-box {
+            background: rgba(255, 62, 62, 0.1); border: 2px solid var(--accent-red);
+            padding: 30px; border-radius: 20px; margin: 30px 0;
+        }
+        .critical-box h4 { color: var(--accent-red) !important; margin-top: 0; }
+
+        .code-block {
+            background: #111; color: var(--accent-amber); padding: 20px;
+            border-radius: 12px; font-family: monospace; border: 1px solid #222;
+            margin: 15px 0; display: block; overflow-x: auto;
+        }
+
+        .amazon-link { color: var(--accent-blue); font-weight: 800; text-decoration: none; border-bottom: 1px solid; }
+
+        footer { padding: 60px 5%; border-top: 1px solid var(--border-color); text-align: center; color: #444; }
+
+        @media (max-width: 768px) { 
+            .nav-links { display: none; }
+            .btn-main, .btn-secondary { width: 100%; padding: 18px; font-size: 1.1rem; }
+            .hero { min-height: auto; padding-top: 100px; }
+            .step-card { padding: 30px; }
+        }
+    </style>
+<script src="/js/consent.js"></script>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">COW DELAYS<span> MONITOR</span></a>
+        
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="#features" data-i18n="nav-features">Funzioni</a>
+                <a href="#install" data-i18n="nav-install">Installazione</a>
+                <a href="blog/it/blog.html" style="color:var(--accent-amber)" data-i18n="nav-blog" data-blog-link>Blog & News</a>
+            </nav>
+            <div style="margin-left: 20px;">
+                <select id="lang-select">
+                    <option value="it">IT</option>
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 data-i18n="hero-title">La Gestione delle vacche in ritardo, resa semplice.</h1>
+        <p data-i18n="hero-desc">Basta consultare smartphone o tablet tra la mandria. Trasforma ogni schermo in un monitor industriale fisso collegato direttamente ai tuoi robot Astronaut®.</p>
+        
+        <div class="cta-group">
+            <a href="https://chromewebstore.google.com/detail/cmilpbmjbkobaepbgebjjofdjjefccpm?utm_source=item-share-cb" class="btn-main" data-i18n="btn-main">Add to Chrome</a>
+            <a href="#install" class="btn-secondary" data-i18n="btn-sec">Setup Guide</a>
+        </div>
+
+        <img src="lelydisplaydelay.png" class="hero-img" alt="CowMonitor System">
+    </section>
+
+    <section id="features" class="features">
+        <div class="grid">
+            <div class="feature-card">
+                <h3 style="color:var(--accent-red)" data-i18n="f1-t">Semaforo Ritardi</h3>
+                <p data-i18n="f1-d">Codici colore istantanei (Verde, Ambra, Rosso) per identificare l'urgenza del recupero vacche senza errori.</p>
+            </div>
+            <div class="feature-card">
+                <h3 style="color:var(--primary)" data-i18n="f2-t">Dati Comparativi</h3>
+                <p data-i18n="f2-d">Confronto immediato tra Resa Prevista e Produzione Effettiva per individuare cali metabolici precoci.</p>
+            </div>
+            <div class="feature-card">
+                <h3 style="color:var(--accent-blue)" data-i18n="f3-t">Auto-Discovery</h3>
+                <p data-i18n="f3-d">Nessuna configurazione IP. L'estensione scansiona automaticamente la tua rete locale e trova il robot.</p>
+            </div>
+            <div class="feature-card">
+                <h3 style="color:var(--accent-amber)" data-i18n="f4-t">Leggera ed Economica</h3>
+                <p data-i18n="f4-d">Una semplice estensione Chrome al costo di un caffè al mese. Installabile su ogni PC o Mini PC.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="guide-section" id="install">
+        <div class="guide-container">
+            <div class="guide-header">
+                <h2 data-i18n="guide-title">Guida all'installazione</h2>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-badge">1</div>
+                <h3 data-i18n="s1-t">Configurazione Hardware (Monitor + PC)</h3>
+                <p data-i18n="s1-d1">Installa un monitor industriale e un microPC fanless dietro di esso. Questa combinazione garantisce stabilità 24/7 in ambiente stalla.</p>
+                <!-- TODO: Add localized Amazon affiliate links per language (different ASINs/domains for each market) -->
+                <ul>
+                    <li><a href="https://amazon.it/dp/B0CZ3MYTR9" class="amazon-link" target="_blank">Monitor Consigliato (21-27")</a></li>
+                    <li><a href="https://www.amazon.it/dp/B0C7TTN23N" class="amazon-link" target="_blank">MicroPC Windows (Fanless)</a></li>
+                </ul>
+                <p data-i18n="s1-d2">Posiziona il monitor a 160-180cm da terra, al riparo da acqua e vibrazioni eccessive.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-badge">2</div>
+                <h3 data-i18n="s2-t">Connessione alla Rete Lely</h3>
+                <div class="critical-box">
+                    <h4 data-i18n="s2-c-t">REQUISITO FONDAMENTALE</h4>
+                    <p data-i18n="s2-c-d">Il microPC DEVE essere collegato alla STESSA RETE locale (LAN/WiFi) del computer dove gira Lely T4C o Horizon. Senza questo, i dati non verranno rilevati.</p>
+                </div>
+                <p data-i18n="s2-d1">Consigliamo vivamente l'uso di un cavo Ethernet per evitare interferenze tipiche del WiFi in stalla.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-badge">3</div>
+                <h3 data-i18n="s3-t">Installazione Chrome ed Estensione</h3>
+                <p data-i18n="s3-d1">Una volta avviato Windows, segui questi passaggi dettagliati:</p>
+                <ul>
+                    <li data-i18n="s3-l1">Scarica Google Chrome e impostalo come "Browser Predefinito" nelle impostazioni di sistema.</li>
+                    <li data-i18n="s3-l2">Apri il Chrome Web Store e cerca "Cow Delays Monitor Pro".</li>
+                    <li data-i18n="s3-l3">Clicca su "Aggiungi" e attendi l'apertura automatica del QR Code per l'attivazione della licenza.</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-badge">4</div>
+                <h3 data-i18n="s4-t">Automazione Totale (Kiosk Mode)</h3>
+                <p data-i18n="s4-d1">Per rendere il sistema autonomo in caso di blackout o riavvii:</p>
+                <h4 data-i18n="s4-h1">A. Accesso senza Password</h4>
+                <p data-i18n="s4-p1">Premi <b>Win+R</b>, scrivi <b>netplwiz</b> e togli la spunta a "Gli utenti devono immettere nome e password". Inserisci la tua password e conferma.</p>
+                
+                <h4 data-i18n="s4-h2">B. Avvio automatico a pieno schermo</h4>
+                <p data-i18n="s4-p2">Premi <b>Win+R</b>, scrivi <b>shell:startup</b>. Crea un collegamento a Chrome e aggiungi questo parametro alla fine del percorso:</p>
+                <code class="code-block">"C:\...\chrome.exe" --kiosk</code>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Cow Delays Monitor Pro - Precision Farming Technology</p>
+        <p data-i18n="f-legal">Independent product for Astronaut® robots. Not affiliated with Lely Industries N.V.</p>
+        <p style="margin-top:10px;font-size:0.8rem;">
+            <a href="privacy.html" style="color:#666" data-i18n="f-privacy">Privacy Policy</a> |
+            <a href="cookie-policy.html" style="color:#666" data-i18n="f-cookie">Cookie Policy</a> |
+            <a href="#" onclick="window.CmConsent.show();return false;" style="color:#666" data-i18n="f-cookie-settings">Impostazioni Cookie</a>
+        </p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // CTA click
+      var ctaBtn = document.querySelector('a.btn-main');
+      if (ctaBtn) ctaBtn.addEventListener('click', function() {
+        if (typeof gtag === 'function') {
+          gtag('event', 'click_add_to_chrome', { event_category: 'CTA', event_label: 'hero_cta' });
+          gtag('event', 'conversion', { 'send_to': 'AW-XXXXXXXXX/YYYYY' });
+        }
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout');
+          fbq('trackCustom', 'ClickAddToChrome');
+        }
+      });
+      // Install section view
+      var installSection = document.getElementById('install');
+      if (installSection) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) { if (e.isIntersecting) {
+            if (typeof gtag === 'function') gtag('event', 'view_install_guide', { event_category: 'Engagement' });
+            if (typeof fbq === 'function') fbq('track', 'ViewContent', { content_name: 'install_guide' });
+            obs.unobserve(e.target);
+          }});
+        }, { threshold: 0.3 });
+        obs.observe(installSection);
+      }
+      // Amazon clicks
+      document.querySelectorAll('a.amazon-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          if (typeof gtag === 'function') gtag('event', 'click_amazon_hardware', { event_label: link.textContent.trim() });
+        });
+      });
+    });
+    </script>
+
+    <script>
+        const translations = {
+            it: {
+                "nav-features": "Funzioni", "nav-install": "Installazione", "btn-nav": "INSTALLA", "nav-blog": "Blog & News",
+                "hero-title": "La Gestione delle vacche in ritardo, resa semplice.",
+                "hero-desc": "Basta consultare smartphone o tablet tra la mandria. Trasforma ogni schermo in un monitor industriale fisso collegato direttamente ai tuoi robot Astronaut®.",
+                "btn-main": "Aggiungi a Chrome", "btn-sec": "Guida Installazione",
+                "f1-t": "Semaforo Ritardi", "f1-d": "Codici colore istantanei per identificare l'urgenza del recupero vacche senza errori.",
+                "f2-t": "Dati Comparativi", "f2-d": "Confronto immediato tra Resa Prevista e Produzione Effettiva.",
+                "f3-t": "Auto-Discovery", "f3-d": "Scansione automatica della rete locale per trovare il robot senza IP fissi.",
+                "f4-t": "Leggera ed Economica", "f4-d": "Una semplice estensione Chrome al costo di un caffè al mese. Installabile su ogni PC o Mini PC.",
+                "guide-title": "Guida completa all'installazione",
+                "s1-t": "1. Hardware (Monitor + PC)",
+                "s1-d1": "Installa un monitor industriale e un microPC fanless dietro di esso.",
+                "s1-d2": "Posiziona il monitor a 160-180cm da terra, al riparo da acqua.",
+                "s2-t": "2. Connessione alla Rete Lely",
+                "s2-c-t": "REQUISITO FONDAMENTALE",
+                "s2-c-d": "Il microPC deve essere sulla STESSA RETE del computer Lely (T4C o Horizon).",
+                "s2-d1": "L'uso del cavo Ethernet garantisce la massima stabilità.",
+                "s3-t": "3. Installazione Chrome ed Estensione",
+                "s3-d1": "Passaggi per il setup software:",
+                "s3-l1": "Scarica Chrome e impostalo come browser predefinito.",
+                "s3-l2": "Installa l'estensione dallo store ufficiale.",
+                "s3-l3": "Attiva la licenza Pro tramite il QR Code visualizzato.",
+                "s4-t": "4. Automazione Totale (Kiosk Mode)",
+                "s4-d1": "Rendi il sistema autonomo al 100%:",
+                "s4-h1": "A. Accesso senza Password",
+                "s4-p1": "Usa il comando 'netplwiz' per rimuovere il login manuale.",
+                "s4-h2": "B. Avvio automatico",
+                "s4-p2": "Usa 'shell:startup' per avviare Chrome in modalità Kiosk.",
+                "f-legal": "Prodotto indipendente. Astronaut® è un marchio di Lely.",
+                "f-privacy": "Privacy Policy",
+                "f-cookie": "Cookie Policy",
+                "f-cookie-settings": "Impostazioni Cookie"
+            },
+            en: {
+                "nav-features": "Features", "nav-install": "Installation", "btn-nav": "INSTALL", "nav-blog": "Blog & News",
+                "hero-title": "Cow delay management, made simple.",
+                "hero-desc": "No more checking phones while working with the herd. Turn any screen into a fixed industrial monitor connected to your Astronaut® robots.",
+                "btn-main": "Add to Chrome", "btn-sec": "Setup Guide",
+                "f1-t": "Delay Traffic Light", "f1-d": "Instant color codes to identify cow recovery urgency without errors.",
+                "f2-t": "Comparative Data", "f2-d": "Immediate comparison between Expected Yield and Daily Production.",
+                "f3-t": "Auto-Discovery", "f3-d": "Automatic LAN scanning to find your robot without static IPs.",
+                "f4-t": "Light & Affordable", "f4-d": "A simple Chrome extension for the cost of one coffee per month. Install on any PC.",
+                "guide-title": "Complete Installation Guide",
+                "s1-t": "1. Hardware (Monitor + PC)",
+                "s1-d1": "Install an industrial monitor and a fanless microPC behind it.",
+                "s1-d2": "Place the monitor at 160-180cm height, away from water.",
+                "s2-t": "2. Lely Network Connection",
+                "s2-c-t": "CRITICAL REQUIREMENT",
+                "s2-c-d": "The microPC MUST be on the SAME NETWORK as the Lely computer (T4C or Horizon).",
+                "s2-d1": "Ethernet cable is highly recommended for stability.",
+                "s3-t": "3. Chrome & Extension Setup",
+                "s3-d1": "Software setup steps:",
+                "s3-l1": "Download Chrome and set it as default browser.",
+                "s3-l2": "Install the extension from the official store.",
+                "s3-l3": "Activate the Pro license using the displayed QR Code.",
+                "s4-t": "4. Full Automation (Kiosk Mode)",
+                "s4-d1": "Make the system 100% autonomous:",
+                "s4-h1": "A. Passwordless Login",
+                "s4-p1": "Use 'netplwiz' to remove manual login prompt.",
+                "s4-h2": "B. Auto-startup",
+                "s4-p2": "Use 'shell:startup' to launch Chrome in Kiosk mode.",
+                "f-legal": "Independent product. Astronaut® is a trademark of Lely.",
+                "f-privacy": "Privacy Policy",
+                "f-cookie": "Cookie Policy",
+                "f-cookie-settings": "Cookie Settings"
+            },
+            es: {
+                "nav-features": "Funciones", "nav-install": "Instalación", "btn-nav": "INSTALAR", "nav-blog": "Blog & Noticias",
+                "hero-title": "Gestión de vacas retrasadas, simplificada.",
+                "hero-desc": "No más consultas al móvil entre el rebaño. Convierte cualquier pantalla en un monitor industrial fijo conectado a tus robots Astronaut®.",
+                "btn-main": "Añadir a Chrome", "btn-sec": "Guía Instalación",
+                "f1-t": "Semáforo Retrasos", "f1-d": "Códigos de color instantáneos para identificar la urgencia.",
+                "f2-t": "Datos Comparativos", "f2-d": "Comparación inmediata entre Rendimiento Esperado y Producción.",
+                "f3-t": "Auto-Discovery", "f3-d": "La extensión encuentra el robot automáticamente.",
+                "f4-t": "Ligera y Económica", "f4-d": "Una extensión simple por el costo de un café.",
+                "guide-title": "Guía completa de instalación",
+                "s1-t": "1. Hardware (Pantalla + PC)",
+                "s1-d1": "Instala un monitor industrial y un microPC fanless.",
+                "s1-d2": "Colocar a 160-180cm de altura.",
+                "s2-t": "2. Conexión Red Lely",
+                "s2-c-t": "REQUISITO FUNDAMENTAL",
+                "s2-c-d": "El PC debe estar en la MISMA RED que el ordenador Lely.",
+                "s2-d1": "El cable Ethernet garantiza la máxima estabilidad.",
+                "s3-t": "3. Instalación Chrome",
+                "s3-d1": "Pasos de software:",
+                "s3-l1": "Descarga Chrome y configúralo como predeterminado.",
+                "s3-l2": "Instala la extensión desde la tienda oficial.",
+                "s3-l3": "Activa la licencia con el código QR.",
+                "s4-t": "4. Automatización Total",
+                "s4-d1": "Sistema 100% autónomo:",
+                "s4-h1": "A. Inicio sin contraseña",
+                "s4-p1": "Usa 'netplwiz' para quitar el login manual.",
+                "s4-h2": "B. Auto-arranque",
+                "s4-p2": "Usa 'shell:startup' para iniciar en modo Kiosk.",
+                "f-legal": "Producto independiente. Astronaut® es marca de Lely.",
+                "f-privacy": "Política de Privacidad",
+                "f-cookie": "Política de Cookies",
+                "f-cookie-settings": "Configuración de Cookies"
+            },
+            fr: {
+                "nav-features": "Fonctions", "nav-install": "Installation", "btn-nav": "INSTALLER", "nav-blog": "Blog & Actus",
+                "hero-title": "La gestion des vaches en retard, simplifiée.",
+                "hero-desc": "Fini de consulter le smartphone dans le troupeau. Transformez n'importe quel écran en moniteur industriel connecté à vos robots Astronaut®.",
+                "btn-main": "Ajouter à Chrome", "btn-sec": "Guide Installation",
+                "f1-t": "Feux de Retard", "f1-d": "Codes couleur instantanés pour identifier l'urgence.",
+                "f2-t": "Données Comparatives", "f2-d": "Comparaison immédiate entre rendement prévu et production.",
+                "f3-t": "Auto-Discovery", "f3-d": "L'extension trouve le robot automatiquement.",
+                "f4-t": "Légère et Abordable", "f4-d": "Une simple extension pour le prix d'un café.",
+                "guide-title": "Guide d'installation complet",
+                "s1-t": "1. Matériel (Écran + PC)",
+                "s1-d1": "Installez un moniteur industriel et un microPC sans ventilateur.",
+                "s1-d2": "Placez à 160-180cm de hauteur.",
+                "s2-t": "2. Connexion Réseau Lely",
+                "s2-c-t": "EXIGENCE CRITIQUE",
+                "s2-c-d": "Le PC doit être sur le MÊME RÉSEAU que l'ordinateur Lely.",
+                "s2-d1": "Le câble Ethernet assure la stabilité.",
+                "s3-t": "3. Installation Chrome",
+                "s3-d1": "Étapes logicielles :",
+                "s3-l1": "Téléchargez Chrome et définissez-le par défaut.",
+                "s3-l2": "Installez l'extension depuis le store officiel.",
+                "s3-l3": "Activez la licence via le QR Code.",
+                "s4-t": "4. Automatisation Totale",
+                "s4-d1": "Système 100% autonome :",
+                "s4-h1": "A. Connexion sans mot de passe",
+                "s4-p1": "Utilisez 'netplwiz' pour supprimer le login manuel.",
+                "s4-h2": "B. Démarrage auto",
+                "s4-p2": "Utilisez 'shell:startup' pour lancer en mode Kiosk.",
+                "f-legal": "Produit indépendant. Astronaut® est une marque de Lely.",
+                "f-privacy": "Politique de confidentialité",
+                "f-cookie": "Politique des cookies",
+                "f-cookie-settings": "Paramètres des cookies"
+            },
+            de: {
+                "nav-features": "Funktionen", "nav-install": "Installation", "btn-nav": "INSTALLIEREN", "nav-blog": "Blog & News",
+                "hero-title": "Verspätungsmanagement, einfach gemacht.",
+                "hero-desc": "Kein Handy-Check mehr in der Herde. Verwandeln Sie jeden Bildschirm in einen Industriemonitor für Ihre Astronaut®-Roboter.",
+                "btn-main": "Zu Chrome hinzufügen", "btn-sec": "Anleitung",
+                "f1-t": "Verzögerungs-Ampel", "f1-d": "Sofortige Farbcodes zur Dringlichkeitserkennung.",
+                "f2-t": "Vergleichsdaten", "f2-d": "Direkter Vergleich zwischen erwartetem und tatsächlichem Ertrag.",
+                "f3-t": "Auto-Discovery", "f3-d": "Die Erweiterung findet den Roboter automatisch.",
+                "f4-t": "Leicht & Günstig", "f4-d": "Eine einfache Erweiterung zum Preis eines Kaffees.",
+                "guide-title": "Vollständige Installationsanleitung",
+                "s1-t": "1. Hardware (Monitor + PC)",
+                "s1-d1": "Installieren Sie einen Industriemonitor und einen lüfterlosen PC.",
+                "s1-d2": "Auf 160-180cm Höhe montieren.",
+                "s2-t": "2. Lely Netzwerkverbindung",
+                "s2-c-t": "KRITISCHE ANFORDERUNG",
+                "s2-c-d": "Der PC muss im GLEICHEN NETZWERK wie der Lely-Computer sein.",
+                "s2-d1": "Ethernet-Kabel wird für Stabilität empfohlen.",
+                "s3-t": "3. Chrome Installation",
+                "s3-d1": "Software-Schritte:",
+                "s3-l1": "Laden Sie Chrome herunter und setzen Sie es als Standard.",
+                "s3-l2": "Installieren Sie die Erweiterung aus dem offiziellen Store.",
+                "s3-l3": "Aktivieren Sie die Lizenz über den QR-Code.",
+                "s4-t": "4. Vollautomatisierung",
+                "s4-d1": "System 100% autonom machen:",
+                "s4-h1": "A. Anmeldung ohne Passwort",
+                "s4-p1": "Verwenden Sie 'netplwiz', um das manuelle Login zu entfernen.",
+                "s4-h2": "B. Autostart",
+                "s4-p2": "Verwenden Sie 'shell:startup' für den Kiosk-Modus.",
+                "f-legal": "Unabhängiges Produkt. Astronaut® ist eine Marke von Lely.",
+                "f-privacy": "Datenschutzerklärung",
+                "f-cookie": "Cookie-Richtlinie",
+                "f-cookie-settings": "Cookie-Einstellungen"
+            }
+        };
+
+        const langSelect = document.getElementById('lang-select');
+        function updateLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            const blogLink = document.querySelector('[data-blog-link]');
+            if (blogLink) blogLink.href = 'blog/' + lang + '/blog.html';
+            localStorage.setItem('lang', lang);
+        }
+        langSelect.addEventListener('change', e => updateLanguage(e.target.value));
+        const initLang = localStorage.getItem('lang') || 'it';
+        langSelect.value = initLang;
+        updateLanguage(initLang);
+    </script>
+</body>
+</html>
