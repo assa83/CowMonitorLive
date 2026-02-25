@@ -274,15 +274,8 @@
   };
 
   /* ── 9. Init ─────────────────────────────────────────────── */
-  var consent = getConsent();
-  if (consent) {
-    applyConsent(consent);
-  } else {
-    // Show banner once DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', renderBanner);
-    } else {
-      renderBanner();
-    }
-  }
+  // DEBUG MODE: trackers always on, banner disabled
+  // TODO: ripristinare il blocco originale dopo il debug per conformita' GDPR
+  loadAnalytics();
+  loadMarketing();
 })();
